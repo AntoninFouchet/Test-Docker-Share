@@ -16,4 +16,4 @@ COPY .sh .
 # On le rend exécutable
 RUN chmod +x .sh
 
-CMD ["python", "mon_serveur_mcp.py"]
+CMD ["./.sh"]
