@@ -12,7 +12,8 @@ python mon_serveur_mcp.py
 
 echo "Conteneur lancé"
 
-
+# On lance le test_client.py
+python test_client.py
 
 
 

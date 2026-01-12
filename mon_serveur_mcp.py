@@ -1,9 +1,14 @@
 import os
 from mcp.server.fastmcp import FastMCP
+from ollama import Client
 
-mcp = FastMCP("ServeurStage_Git")
+mcp = FastMCP("serveur Stage")
+MODELE_IA = "qwen2.5-coder:1.5b"
 
-# OUTIL 1 : Lister les fichiers (Simulation Git)
+# Pointe vers hôte Windows
+client = Client(host='http://host.docker.internal:11434')
+
+# OUTIL 1 : Lister les fichiers
 @mcp.tool()
 def lister_fichiers(dossier: str = ".") -> str:
     """
@@ -28,7 +33,25 @@ def lire_fichier(nom_fichier: str) -> str:
     except Exception as e:
         return f"Impossible de lire le fichier {nom_fichier} : {str(e)}"
 
+@mcp.tool()
+def analyser_fichier_ia(nom_fichier: str, question: str) -> str:
+    contenu = lire_fichier(nom_fichier)
+
+    prompt = f"""
+    Voici le contenu du fichier '{nom_fichier}' :
+    ```
+    {contenu}
+    ```
+    Consigne de l'utilisateur : {question}
+    """
+    try:
+        reponse = client.chat(model=MODELE_IA, messages=[
+            {'role': 'user', 'content': prompt}
+        ])
+        return reponse['message']['content']
+    except Exception as e:
+        return f"Erreur de communication avec l'IA"
+
+
 if __name__ == "__main__":
     mcp.run()
-
-    
