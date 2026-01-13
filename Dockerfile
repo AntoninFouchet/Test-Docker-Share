@@ -14,7 +14,7 @@ COPY app.py .
 COPY .sh .
 
 # On le rend exécutable
-RUN chmod +x .sh
+RUN sed -i 's/\r$//' .sh && chmod +x .sh
 
 ENV OLLAMA_HOST=http://host.docker.internal:11434
 
