@@ -32,7 +32,7 @@ def lire_fichier(nom_fichier: str) -> str:
             return f.read()
     except Exception as e:
         return f"Impossible de lire le fichier {nom_fichier} : {str(e)}"
-
+# OUTIL 3 : Analyser un fichier avec l'IA
 @mcp.tool()
 def analyser_fichier_ia(nom_fichier: str, question: str) -> str:
     contenu = lire_fichier(nom_fichier)
