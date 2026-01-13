@@ -13,8 +13,8 @@ COPY app.py .
 
 # Copie du script Linux
 COPY .sh .
-# On le rend exécutable
-RUN chmod +x .sh
+# On le rend exécutable et on s'assure que les fins de ligne sont au format Unix
+RUN sed -i 's/\r$//' .sh && chmod +x .sh
 
 ENV OLLAMA_HOST=http://host.docker.internal:11434
 
