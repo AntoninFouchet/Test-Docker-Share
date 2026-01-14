@@ -1,8 +1,16 @@
+networks:
+  public_net:
+    internal: false
+  internal_net:
+    internal: true
+
 services:
   app:
     build: .
     environment:
       - OLLAMA_HOST=http://host.docker.internal:11434
+    networks:
+      - ${DOCKER_NETWORK:-public_net}
     volumes:
       - ./data:/app/data
 
